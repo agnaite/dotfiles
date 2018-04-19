@@ -1,0 +1,30 @@
+[alias]
+  c = commit -m
+  a = add
+[color]
+	ui = true
+[user]
+	name = Agne Klimaite 
+	email = agnaite@me.com
+[github]
+	user = agnaite
+[core]
+	excludesfile = /Users/agne/.gitignore_global
+	quotepath = false
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
+[push]
+	default = simple
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[difftool "nbdime"]
+	cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\"
+[difftool]
+	prompt = false
+[mergetool "nbdime"]
+	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+[mergetool]
+	prompt = false
