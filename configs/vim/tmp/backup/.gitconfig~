@@ -1,0 +1,38 @@
+[alias]
+  c = commit -m
+  a = add
+[color]
+	ui = true
+[user]
+	name = Austin Davis-Richardson
+	email = harekrishna@gmail.com
+	signingkey = 0FE4A28B
+[github]
+	user = audy
+[core]
+	excludesfile = /Users/austin/.gitignore_global
+	quotepath = false
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
+[ghi]
+	token = !security find-internet-password -a audy -s github.com -l 'ghi token' -w
+[push]
+	default = simple
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[diff "jupyternotebook"]
+	command = git-nbdiffdriver diff
+[merge "jupyternotebook"]
+	driver = git-nbmergedriver merge %O %A %B %L %P
+	name = jupyter notebook merge driver
+[difftool "nbdime"]
+	cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\"
+[difftool]
+	prompt = false
+[mergetool "nbdime"]
+	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+[mergetool]
+	prompt = false

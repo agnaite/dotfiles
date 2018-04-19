@@ -1,1 +1,0 @@
-/Users/aklimaite/Documents/code/dotfiles/configs/.bash_profile

@@ -1,0 +1,87 @@
+package lockstep
+
+import (
+	"encoding/json"
+	"errors"
+	"time"
+
+	"github.com/heroku/cedar/domain-funnel/model"
+)
+
+// HeartbeatEvent represents a lockstep heartbeat.
+var HeartbeatEvent = &Event{Heartbeat: true}
+
+// Event represents data or a heartbeat from a
+// lockstep feed..
+type Event struct {
+	Heartbeat bool
+	Data      interface{}
+}
+
+// TouchEmittedAt sets a new EmittedAt time on the event and
+// returns the previous EmittedAt.
+//
+// It returns ok = false if the event is a heartbeat.
+func (e *Event) TouchEmittedAt() (prev time.Time, ok bool) {
+	if e.Heartbeat {
+		return time.Time{}, false
+	}
+
+	dmn, err := e.GetDomain()
+	if err != nil {
+		return time.Time{}, false
+	}
+
+	t := time.Unix(dmn.EmittedAt, 0)
+	dmn.EmittedAt = time.Now().Unix()
+	return t, true
+}
+
+// MarshalJSON implements the json.Marshaler interface. It checks
+// for Heartbeat before marshaling Event.Data.
+func (e *Event) MarshalJSON() ([]byte, error) {
+	result := make(map[string]interface{})
+
+	if e.Heartbeat {
+		result["heartbeat"] = true
+		return json.Marshal(result)
+	}
+
+	return json.Marshal(e.Data)
+}
+
+// GetDomain returns the underlying domain if there
+// is one stored in e.Data, or an error if there is not.
+func (e *Event) GetDomain() (*model.Domain, error) {
+	if e == nil {
+		return nil, errors.New("event is nil")
+	}
+	dmn, ok := e.Data.(*model.Domain)
+	if !ok {
+		return nil, errors.New("domain type error")
+	}
+	return dmn, nil
+}
+
+// GetDyno returns the underlying dyno if there
+// is one stored in e.Data, or an error if there is not.
+func (e *Event) GetDyno() (*Dyno, error) {
+	if e == nil {
+		return nil, errors.New("event is nil")
+	}
+	dyn, ok := e.Data.(*Dyno)
+	if !ok {
+		return nil, errors.New("dyno type error")
+	}
+	return dyn, nil
+}
+
+// getSince takes in an event and if event.Data is of type
+// Dyno returns Dyno.Since
+func (e *Event) getSince() (string, error) {
+	dyn, err := e.GetDyno()
+	if err != nil {
+		return "", err
+	}
+	return dyn.Since, nil
+}
