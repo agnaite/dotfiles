@@ -1,5 +1,14 @@
 "
-" The Very Basics
+"
+"     .  o ..
+"     o . o o.o
+"          ...oo
+"            __[]__
+"         __|_o_o_o\__
+"         \""""""""""/
+"          \. ..  . /
+"     ^^^^^^^^^^^^^^^^^^^^
+"
 "
 
 set nocompatible
@@ -22,6 +31,8 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 
+set pyxversion=3
+
 nnoremap q :q<cr> " kill window with q
 
 set backspace=indent,eol,start " backspace over anything
@@ -35,7 +46,8 @@ set nosmarttab " no tabs to begin with
 
 set mouse=vin
 
-set clipboard=unnamed " use system clipboard
+" does not work in tmuxy ?
+" set clipboard+=unnamed " use system clipboard
 
 " use version control for version control
 set autowrite
@@ -101,9 +113,6 @@ au BufNewFile,BufReadPost *.md set filetype=markdown
 " always use system ruby
 let g:ruby_path = ['/usr/local/bin/ruby', '/usr/bin/ruby']
 
-" always use python3 (for iron.nvim)
-let g:python3_host_prog = '/usr/local/bin/python'
-
 "
 " Time For Plugins!
 "
@@ -116,6 +125,42 @@ Plug 'tpope/vim-surround'
 Plug 'vim-python/python-syntax'
 Plug 'faceleg/delete-surrounding-function-call.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'dsawardekar/ember.vim'
+"
+" html
+"" HTML Bundle
+Plug 'hail2u/vim-css3-syntax'
+Plug 'gorodinskiy/vim-coloresque'
+Plug 'mattn/emmet-vim'
+
+
+" javascript
+"" Javascript Bundle
+Plug 'jelera/vim-javascript-syntax'
+
+
+" python
+"" Python Bundle
+Plug 'davidhalter/jedi-vim'
+Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
+
+
+" ruby
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-projectionist'
+Plug 'thoughtbot/vim-rspec'
+Plug 'ecomba/vim-ruby-refactoring'
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
+Plug 'zchee/deoplete-go', { 'do': 'make'}
 
 call plug#end()
 
@@ -133,7 +178,7 @@ nnoremap <leader>W :set wrap!<cr>
 "
 
 " language-specific syntax highlighting in markdown ''' blocks
-let g:markdown_fenced_languages = ['sh', 'css', 'javascript', 'python', 'ruby', 'xml']
+let g:markdown_fenced_languages = ['sh', 'css', 'javascript', 'python', 'ruby', 'xml', 'go']
 
 " CtrlP
 let g:UltiSnipsNoPythonWarning = 1 " silence python version warnings
@@ -149,3 +194,20 @@ let g:ctrlp_max_files=4096
 " run goimports on save
 let g:go_fmt_command = "goimports"
 
+" neocomplete like
+set completeopt+=noinsert
+" deoplete.nvim recommend
+set completeopt+=noselect
+
+" Path to python interpreter for neovim
+" " always use python3 (for iron.nvim)
+let g:python3_host_prog = '/usr/local/bin/python3'
+
+" Skip the check of neovim module
+let g:python3_host_skip_check = 1
+
+" Run deoplete.nvim automatically
+let g:deoplete#enable_at_startup = 1
+" deoplete-go settings
+let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']

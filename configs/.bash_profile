@@ -1,9 +1,5 @@
 eval "$(rbenv init -)"
 
-export LSCOLORS="ExGxBxDxCxEgEdxbxgxcxd"
-export GREP_OPTIONS="--color"
-alias ls="ls -G"
-
 export GOPATH=$HOME/Documents/code/go
 export PATH="/usr/local/bin:/usr/local/go/bin:$GOPATH/bin:$PATH"
 
@@ -15,6 +11,8 @@ alias  code="cd ~/Documents/code"
 
 #heroku
 alias h="heroku"
+
+alias ls="ls -G"
 
 #heroku/cedar
 alias cedar="cd ~/Documents/code/go/src/github.com/heroku/cedar"
@@ -46,7 +44,7 @@ EMOJI=(
 🌯
 💕
 🐰
-👽
+👽$
 💎
 🔮
 🚀
@@ -62,6 +60,17 @@ parse_git_branch() {
 }
 
 emoji="${EMOJI[$RANDOM % ${#EMOJI[@]}]}"
-    
-export PS1="\[\033[38;5;183m\]agne✨ \[$(tput sgr0)\]\[\033[38;5;147m\][\W]\033[38;5;221m\]\$(parse_git_branch)\[\033[38;5;147m\]: ${emoji}  \[\033[1;38;5;225m\]"
+
+function prompt {
+  local name_color="\[\033[38;5;183m\]"
+  local directory_color="\[\033[38;5;147m\]"
+  local branch_color="\[\033[38;5;221m\]"
+  local RESETCOLOR="\[\e[00m\]"
+
+  export PS1="$name_color\aagne✨$directory_color[\W]$RESETCOLOR$branch_color\$(parse_git_branch) ${emoji} → $RESETCOLOR"
+}
+prompt
+
+# heroku autocomplete setup
+HEROKU_AC_BASH_SETUP_PATH=/Users/aklimaite/Library/Caches/heroku/autocomplete/bash_setup && test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH;
 

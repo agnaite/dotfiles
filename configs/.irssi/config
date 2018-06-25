@@ -4,10 +4,11 @@ servers = (
   {
     chatnet = "austinfanclub.com";
     address = "austinfanclub.com";
-    port = "6565";
+    port = "6363";
     use_ssl = "yes";
     ssl_verify = "no";
     autoconnect = "yes";
+    password = "old frog potato";
   }
 );
 
