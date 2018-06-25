@@ -17,6 +17,9 @@ alias ls="ls -G"
 #heroku/cedar
 alias cedar="cd ~/Documents/code/go/src/github.com/heroku/cedar"
 
+#heroku/dogwood
+alias dw="cd ~/Documents/code/go/src/github.com/heroku/dogwood"
+
 #open bash
 alias  bashp="open ~/.bash_profile"
 
