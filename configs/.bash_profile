@@ -36,6 +36,11 @@ alias venv="source env/bin/activate"
 alias deskhide='defaults write com.apple.finder CreateDesktop -bool false && killall Finder'
 alias deskshow='defaults write com.apple.finder CreateDesktop -bool true && killall Finder'
 
+idfor() {
+    app=$1
+    heroku sudo apps:info -a $app --json | jq .app.id
+}
+
 EMOJI=(
 ☕️
 🍄
