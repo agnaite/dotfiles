@@ -1,11 +1,2 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =9
-let g:netrw_dirhist_1='/Users/aklimaite/Documents/code/dotfiles/configs/.vim/plugged/deoplete-go/data/json'
-let g:netrw_dirhist_2='/Users/aklimaite/Documents/code/dotfiles/configs/.vim/plugged/deoplete-go/data'
-let g:netrw_dirhist_3='/Users/aklimaite/Documents/code/dotfiles/configs/.vim/plugged/deoplete-go'
-let g:netrw_dirhist_4='/Users/aklimaite/Documents/code/dotfiles/configs/.vim/plugged'
-let g:netrw_dirhist_5='/Users/aklimaite/Documents/code/dotfiles/configs/.vim/plugged/deoplete.nvim'
-let g:netrw_dirhist_6='/Users/aklimaite/Documents/code/dotfiles/configs/.vim/plugged/deoplete.nvim/.github'
-let g:netrw_dirhist_7='/Users/aklimaite/Documents/code/dotfiles/configs/.vim/plugged/deoplete.nvim'
-let g:netrw_dirhist_8='/Users/aklimaite/Documents/code/dotfiles/configs/.vim/plugged/deoplete.nvim/plugin'
-let g:netrw_dirhist_9='/Users/aklimaite/.vim'
+let g:netrw_dirhist_cnt =0

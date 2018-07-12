@@ -21,7 +21,7 @@ alias cedar="cd ~/Documents/code/go/src/github.com/heroku/cedar"
 alias dw="cd ~/Documents/code/go/src/github.com/heroku/dogwood"
 
 #open bash
-alias  bashp="open ~/.bash_profile"
+alias  bashp="vim ~/.bash_profile"
 
 #source bash
 alias  src="source ~/.bash_profile"
@@ -59,7 +59,6 @@ EMOJI=(
 💅🏻
 🦄
 🍺
-🇩🇪
 )
 
 # Git branch in prompt.
