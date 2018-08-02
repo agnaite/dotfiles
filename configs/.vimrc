@@ -17,11 +17,15 @@ set encoding=utf-8
 
 " leader/local leader
 let mapleader = " "
-let maplocalleader = ","
+let maplocalleader = "-"
 
 syntax enable
 set synmaxcol=800 " avoid syntax highlighting on large lines
 set t_Co=256
+
+" don't show mode because lightline
+set noshowmode
+set laststatus=2
 
 set noerrorbells
 set novisualbell
@@ -30,10 +34,10 @@ set autoindent
 set shiftwidth=2
 set softtabstop=2
 set tabstop=2
+" make cmd height larger to fit echodoc
+set cmdheight=2
 
 set pyxversion=3
-
-nnoremap q :q<cr> " kill window with q
 
 set backspace=indent,eol,start " backspace over anything
 
@@ -44,10 +48,7 @@ autocmd BufNewFile,BufRead *.R set shiftwidth=2
 set expandtab " expand tabs to spaces
 set nosmarttab " no tabs to begin with
 
-set mouse=vin
-
-" does not work in tmuxy ?
-" set clipboard+=unnamed " use system clipboard
+set mouse=r
 
 " use version control for version control
 set autowrite
@@ -66,8 +67,7 @@ set directory=~/.vim/tmp/swap//   " swap files
 set undofile
 set undoreload=10000
 
-" clean trailing whitespace
-nnoremap <leader>ww mz:%s/\s\+$//<cr>:let @/=''<cr>`z
+
 
 " return to same line when you reopen vim
 augroup line_return
@@ -90,11 +90,7 @@ set ic " base case sensitive, unless not
 set smartcase " be case insensitive, or don't
 
 " colorscheme
-set background=dark
 colorscheme hybrid
-let g:hybrid_custom_term_colors = 1
-let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
-
 
 " disable visual bell in MacVim
 autocmd! GUIEnter * set vb t_vb=
@@ -118,6 +114,7 @@ let g:ruby_path = ['/usr/local/bin/ruby', '/usr/bin/ruby']
 "
 
 call plug#begin('~/.vim/plugged')
+
 Plug 'kristijanhusak/vim-carbon-now-sh'
 Plug 'godlygeek/tabular'                        " Tab /=
 Plug 'kien/ctrlp.vim'
@@ -126,6 +123,8 @@ Plug 'vim-python/python-syntax'
 Plug 'faceleg/delete-surrounding-function-call.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'dsawardekar/ember.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'tpope/vim-fugitive'
 "
 " html
 "" HTML Bundle
@@ -160,11 +159,10 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'zchee/deoplete-go', {'do': 'make'}
+Plug 'Shougo/echodoc' 
 
 call plug#end()
-
-map <Leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 
 "
 " Mappings
@@ -173,6 +171,26 @@ map <Leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR
 " Wrap selection
 nnoremap <leader>W :set wrap!<cr>
 
+" Open .vimrc in vertical split 
+nnoremap <leader>ev :vsp $MYVIMRC<cr>
+" Source .vimrc
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" Wrap word in double quotes
+nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel<cr>
+
+" clean trailing whitespace
+nnoremap <leader>ww mz:%s/\s\+$//<cr>:let @/=''<cr>`z
+
+" move cursor to beginning of line
+inoremap <localleader>H <esc>0i
+   
+" move cursor to end of line
+inoremap <localleader>L <esc>$i
+
+" run current python program 
+nnoremap <leader>z :exec '!python' shellescape(@%, 1)<cr>
+
 "
 " Plugin Settings
 "
@@ -180,24 +198,31 @@ nnoremap <leader>W :set wrap!<cr>
 " language-specific syntax highlighting in markdown ''' blocks
 let g:markdown_fenced_languages = ['sh', 'css', 'javascript', 'python', 'ruby', 'xml', 'go']
 
-" CtrlP
-let g:UltiSnipsNoPythonWarning = 1 " silence python version warnings
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*pyc
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](\.git|\.hg|\.svn|build|venv)$',
-  \ 'file': '\v\.(exe|so|dll|png|jpeg|jpg|gif|pdf)$',
-  \ }
-let g:ctrlp_max_files=4096
-
 " run goimports on save
 let g:go_fmt_command = "goimports"
+let g:deoplete#sources#go#pointer = 1
 
 " neocomplete like
 set completeopt+=noinsert
 " deoplete.nvim recommend
 set completeopt+=noselect
+" no preview for autocomplete
+set completeopt-=preview
+
+"close the preview window after completion is done
+"autocmd CompleteDone * silent! pclose!
+
+" lighline settings
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \ 'left': [ [ 'mode', 'paste' ],
+      \ [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \ 'gitbranch': 'fugitive#head'
+      \ },
+      \ }
 
 " Path to python interpreter for neovim
 " " always use python3 (for iron.nvim)
@@ -206,8 +231,15 @@ let g:python3_host_prog = '/usr/local/bin/python3'
 " Skip the check of neovim module
 let g:python3_host_skip_check = 1
 
+" Run echodoc at startup
+let g:echodoc_enable_at_startup = 1
+
 " Run deoplete.nvim automatically
 let g:deoplete#enable_at_startup = 1
+
+" do not use deoplete for python
+autocmd FileType python :call deoplete#custom#buffer_option('auto_complete', v:false)
+
 " deoplete-go settings
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']

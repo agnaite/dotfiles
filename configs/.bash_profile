@@ -1,10 +1,13 @@
 eval "$(rbenv init -)"
 
 export GOPATH=$HOME/Documents/code/go
-export PATH="/usr/local/bin:/usr/local/go/bin:$GOPATH/bin:$PATH"
+export PATH="/usr/local/go/bin:$GOPATH/bin:$PATH:/usr/local/bin"
 
 #psql not starting
 alias startsql="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
+
+#restart video hardware
+alias killvid="sudo killall VDCAssistant"
 
 #go to Doc/code
 alias  code="cd ~/Documents/code"
@@ -81,3 +84,4 @@ prompt
 # heroku autocomplete setup
 HEROKU_AC_BASH_SETUP_PATH=/Users/aklimaite/Library/Caches/heroku/autocomplete/bash_setup && test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH;
 
+export EDITOR=vim

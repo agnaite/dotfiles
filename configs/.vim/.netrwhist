@@ -1,2 +1,11 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =0
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/Users/aklimaite/Documents/code/planty/env/lib/python3.6'
+let g:netrw_dirhist_2='/Users/aklimaite/Documents/code/planty/tests'
+let g:netrw_dirhist_3='/Users/aklimaite/Documents/code/go/src/github.com/heroku/cedar/cmd/acm-event-handler'
+let g:netrw_dirhist_4='/Users/aklimaite/Documents/code/go/src/github.com/heroku/cedar/connectivity'
+let g:netrw_dirhist_5='/Users/aklimaite/Documents/code/dotfiles/configs/.vim/plugged/deoplete-go'
+let g:netrw_dirhist_6='/Users/aklimaite/Documents/code/dotfiles/configs/.vim/plugged/deoplete-go/plugin'
+let g:netrw_dirhist_7='/Users/aklimaite/Documents/code/dotfiles/configs/.vim/plugged/deoplete.nvim'
+let g:netrw_dirhist_8='/Users/aklimaite/Documents/code/dotfiles/configs/.vim/plugged/deoplete.nvim/plugin'
+let g:netrw_dirhist_9='/Users/aklimaite/Documents/code/planty'
