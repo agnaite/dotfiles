@@ -29,14 +29,12 @@ set laststatus=2
 
 set noerrorbells
 set novisualbell
+set belloff=all
 
 set autoindent
 set shiftwidth=2
 set softtabstop=2
 set tabstop=2
-" make cmd height larger to fit echodoc
-set cmdheight=2
-
 set pyxversion=3
 
 set backspace=indent,eol,start " backspace over anything
@@ -125,6 +123,7 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'dsawardekar/ember.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'ervandew/supertab'
 "
 " html
 "" HTML Bundle
@@ -140,6 +139,7 @@ Plug 'jelera/vim-javascript-syntax'
 
 " python
 "" Python Bundle
+"Plug 'zchee/deoplete-jedi'
 Plug 'davidhalter/jedi-vim'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
@@ -168,9 +168,6 @@ call plug#end()
 " Mappings
 "
 
-" Wrap selection
-nnoremap <leader>W :set wrap!<cr>
-
 " Open .vimrc in vertical split 
 nnoremap <leader>ev :vsp $MYVIMRC<cr>
 " Source .vimrc
@@ -198,19 +195,12 @@ nnoremap <leader>z :exec '!python' shellescape(@%, 1)<cr>
 " language-specific syntax highlighting in markdown ''' blocks
 let g:markdown_fenced_languages = ['sh', 'css', 'javascript', 'python', 'ruby', 'xml', 'go']
 
-" run goimports on save
-let g:go_fmt_command = "goimports"
-let g:deoplete#sources#go#pointer = 1
-
 " neocomplete like
 set completeopt+=noinsert
 " deoplete.nvim recommend
 set completeopt+=noselect
 " no preview for autocomplete
 set completeopt-=preview
-
-"close the preview window after completion is done
-"autocmd CompleteDone * silent! pclose!
 
 " lighline settings
 let g:lightline = {
@@ -227,19 +217,25 @@ let g:lightline = {
 " Path to python interpreter for neovim
 " " always use python3 (for iron.nvim)
 let g:python3_host_prog = '/usr/local/bin/python3'
-
+"
 " Skip the check of neovim module
-let g:python3_host_skip_check = 1
+let g:python3_host_skip_check = 0
 
 " Run echodoc at startup
-let g:echodoc_enable_at_startup = 1
+let g:echodoc_enable_at_startup = 0
+
+"close the preview window after completion is done
+autocmd CompleteDone * silent! pclose!
 
 " Run deoplete.nvim automatically
 let g:deoplete#enable_at_startup = 1
 
 " do not use deoplete for python
-autocmd FileType python :call deoplete#custom#buffer_option('auto_complete', v:false)
+ "autocmd FileType python :call deoplete#custom#buffer_option('auto_complete', v:false)
 
 " deoplete-go settings
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+" run goimports on save
+let g:go_fmt_command = "goimports"
+let g:deoplete#sources#go#pointer = 1
