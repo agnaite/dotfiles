@@ -12,6 +12,9 @@ alias killvid="sudo killall VDCAssistant"
 #go to Doc/code
 alias  code="cd ~/Documents/code"
 
+#vim
+alias vi="vim"
+
 #heroku
 alias h="heroku"
 
@@ -69,15 +72,33 @@ parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
+# Heroku Cloud / Ion
+export ION_USER=aklimaite
+
+DEFAULT_CLOUD=production
+eval "$(ion-client shell)"
+cloud $DEFAULT_CLOUD &> /dev/null
+export CAAS_HOST=cloudformation.herokai.com
+
+# show cloud if inside heroku directory
+cloud_ps1() {
+  if [[ "$PWD" == *heroku* ]]; then
+    echo "["$HEROKU_CLOUD"]"
+  fi
+}
+directory() {
+  echo $(basename $(dirname "$PWD"))/$(basename "$PWD")
+}
 emoji="${EMOJI[$RANDOM % ${#EMOJI[@]}]}"
 
 function prompt {
-  local name_color="\[\033[38;5;183m\]"
+  local name_color="\[\033[38;5;189m\]"
   local directory_color="\[\033[38;5;147m\]"
   local branch_color="\[\033[38;5;221m\]"
+  local cloud_color="\[\033[38;5;115m\]"
   local RESETCOLOR="\[\e[00m\]"
 
-  export PS1="$name_color\aagne✨$directory_color[\W]$RESETCOLOR$branch_color\$(parse_git_branch) ${emoji} → $RESETCOLOR"
+  export PS1="$name_color\aagne✨$directory_color[\W]$cloud_color\$(cloud_ps1)$RESETCOLOR$branch_color\$(parse_git_branch) ${emoji} → $RESETCOLOR"
 }
 prompt
 
