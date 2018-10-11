@@ -22,6 +22,7 @@ let maplocalleader = "-"
 syntax enable
 set synmaxcol=800 " avoid syntax highlighting on large lines
 set t_Co=256
+set background=dark
 
 " don't show mode because lightline
 set noshowmode
@@ -150,6 +151,7 @@ Plug 'tpope/vim-rake'
 Plug 'tpope/vim-projectionist'
 Plug 'thoughtbot/vim-rspec'
 Plug 'ecomba/vim-ruby-refactoring'
+Plug 'vim-ruby/vim-ruby'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -160,7 +162,7 @@ else
 endif
 
 Plug 'zchee/deoplete-go', {'do': 'make'}
-Plug 'Shougo/echodoc' 
+Plug 'Shougo/echodoc'
 
 call plug#end()
 
@@ -168,7 +170,7 @@ call plug#end()
 " Mappings
 "
 
-" Open .vimrc in vertical split 
+" Open .vimrc in vertical split
 nnoremap <leader>ev :vsp $MYVIMRC<cr>
 " Source .vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -181,12 +183,14 @@ nnoremap <leader>ww mz:%s/\s\+$//<cr>:let @/=''<cr>`z
 
 " move cursor to beginning of line
 inoremap <localleader>H <esc>0i
-   
+
 " move cursor to end of line
 inoremap <localleader>L <esc>$i
 
-" run current python program 
+" run current python program
 nnoremap <leader>z :exec '!python' shellescape(@%, 1)<cr>
+
+nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
 "
 " Plugin Settings

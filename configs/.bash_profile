@@ -18,10 +18,13 @@ alias vi="vim"
 #heroku
 alias h="heroku"
 
+# kube workshop
+alias kc='kubectl --kubeconfig /Users/aklimaite/.kube/3aa92223-8f45-4652-b9a1-27910b768c40.conf'
+
 alias ls="ls -G"
 
-#heroku/cedar
-alias cedar="cd ~/Documents/code/go/src/github.com/heroku/cedar"
+#heroku/runtime
+alias cedar="cd ~/Documents/code/go/src/github.com/heroku/runtime"
 
 #heroku/dogwood
 alias dw="cd ~/Documents/code/go/src/github.com/heroku/dogwood"
