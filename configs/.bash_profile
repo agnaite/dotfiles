@@ -1,7 +1,9 @@
 eval "$(rbenv init -)"
 
 export GOPATH=$HOME/Documents/code/go
-export PATH="/usr/local/go/bin:$GOPATH/bin:$PATH:/usr/local/bin"
+export PATH="/usr/local/go/bin:$GOPATH/bin:$PATH:/usr/local/bin/bin:/Users/aklimaite/Documents/code/istio-1.0.6/"
+
+export LDFLAGS="-L/usr/local/opt/erlang@19/lib"
 
 #psql not starting
 alias startsql="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
@@ -19,9 +21,12 @@ alias vi="vim"
 alias h="heroku"
 
 # kube workshop
-alias kc='kubectl --kubeconfig /Users/aklimaite/.kube/3aa92223-8f45-4652-b9a1-27910b768c40.conf'
+# alias kc='kubectl --kubeconfig /Users/aklimaite/.kube/3aa92223-8f45-4652-b9a1-27910b768c40.conf'
 
-alias ls="ls -G"
+alias kc='kubectl --kubeconfig /Users/aklimaite/.kube/4d94775b-f96b-45dc-b701-972ecdb87426.conf'
+
+export LSCOLORS="exfxcxdxbxegedabagacad"
+alias ls="ls -lGH"
 
 #heroku/runtime
 alias cedar="cd ~/Documents/code/go/src/github.com/heroku/runtime"
@@ -110,3 +115,9 @@ HEROKU_AC_BASH_SETUP_PATH=/Users/aklimaite/Library/Caches/heroku/autocomplete/ba
 
 export EDITOR=vim
 
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/aklimaite/Documents/code/google-cloud-sdk/path.bash.inc' ]; then . '/Users/aklimaite/Documents/code/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/aklimaite/Documents/code/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/aklimaite/Documents/code/google-cloud-sdk/completion.bash.inc'; fi
+export PATH="/usr/local/opt/erlang@19/bin:$PATH"

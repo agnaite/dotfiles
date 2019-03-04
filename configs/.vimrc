@@ -125,6 +125,7 @@ Plug 'dsawardekar/ember.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'ervandew/supertab'
+Plug 'avakhov/vim-yaml'
 "
 " html
 "" HTML Bundle
