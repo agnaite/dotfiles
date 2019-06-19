@@ -1,7 +1,7 @@
 eval "$(rbenv init -)"
 
 export GOPATH=$HOME/Documents/code/go
-export PATH="/usr/local/go/bin:$GOPATH/bin:$PATH:/usr/local/bin/bin:/Users/aklimaite/Documents/code/istio-1.0.6/"
+export PATH="$PATH:/usr/local/go/bin:$GOPATH:$GOPATH/bin:/usr/local/opt/erlang@19/bin:"
 
 export LDFLAGS="-L/usr/local/opt/erlang@19/lib"
 
@@ -106,7 +106,7 @@ function prompt {
   local cloud_color="\[\033[38;5;115m\]"
   local RESETCOLOR="\[\e[00m\]"
 
-  export PS1="$name_color\aagne✨$directory_color[\W]$cloud_color\$(cloud_ps1)$RESETCOLOR$branch_color\$(parse_git_branch) ${emoji} → $RESETCOLOR"
+  export PS1="$name_color[🦋][\W]$cloud_color\$(cloud_ps1)$RESETCOLOR$branch_color\$(parse_git_branch) ${emoji} → $RESETCOLOR"
 }
 prompt
 
@@ -120,4 +120,10 @@ if [ -f '/Users/aklimaite/Documents/code/google-cloud-sdk/path.bash.inc' ]; then
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/aklimaite/Documents/code/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/aklimaite/Documents/code/google-cloud-sdk/completion.bash.inc'; fi
-export PATH="/usr/local/opt/erlang@19/bin:$PATH"
+#export PATH="/usr/local/opt/erlang@19/bin:$PATH"
+
+
+# Get the http routes from the port-forwarded ingressgateway pod (requires jq)
+alias iroutes='curl --silent http://localhost:15000/config_dump | jq '\''.configs.routes.dynamic_route_configs[].route_config.virtual_hosts[] | {name: .name, domains: .domains, route: .routes[].match.prefix}'\'''
+
+export PATH="/usr/local/opt/openssl/bin:$PATH"
